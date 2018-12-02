@@ -22,5 +22,5 @@ set title
 set visualbell
 syntax enable
 set fillchars+=vert:\ 
-colorscheme ron
+colorscheme torte
 hi VertSplit guifg=#202020 guibg=#202020 gui=NONE ctermfg=DarkGray ctermbg=DarkGray cterm=NONE
