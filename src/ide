@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [ ! -f .bashrc ]; then
+  curl -o .bashrc http://www.centos.org
+end
+
+bash --init-file .bashrc -i
