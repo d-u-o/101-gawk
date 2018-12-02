@@ -15,8 +15,8 @@ reload() {
 }
 runable() {
 	chmod +x gold
-	THERE=$(echo $PATH | gawk -F: '{print $1}')
-	sudo ln -sf $HERE/gold $THERE/gold
+	#THERE=$(echo $PATH | gawk -F: '{print $1}')
+	#sudo ln -sf $HERE/gold $THERE/gold
 }
 pathadd() {
     	if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
