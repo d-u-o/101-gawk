@@ -135,7 +135,7 @@ ensure ../.gitignore    gitignore
 ensure .vimrc        vimrc
 ensure ../LICENSE.md license
 ensure ../requirements.txt requires
-ensure ../CITATION.txt citation
+ensure ../CITATION.md citation
 
 #--- tag line stuff
 _c1="\[\033[01;32m\]"
