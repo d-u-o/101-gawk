@@ -90,8 +90,8 @@ license() { cat<<-EOF
 	EOF
 }
 gitignore() { cat<<-EOF
-	$Tmp
-	$Var
+	tmp/
+	var/
 	### Vim ###
 	[._]*.s[a-w][a-z]
 	[._]s[a-w][a-z]
@@ -128,7 +128,7 @@ citation() { cat<<-EOF
 ensure() {
   if [ ! -f "$1" ]; then $2 > $1; git add $1; fi
 }
-ensure .gitignore    gitignore
+ensure ../.gitignore    gitignore
 ensure .vimrc        vimrc
 ensure ../LICENSE.md license
 ensure ../requirements.txt requires
