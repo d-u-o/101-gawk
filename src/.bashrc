@@ -10,6 +10,9 @@ Tmp=$HERE/tmp
 dirs() {
 	mkdir -p $Var $Tmp
 }
+reload() {
+	.  .bashrc
+}
 runable() {
 	chmod +x gold
 	THERE=$(echo $PATH | gawk -F: '{print $1}')
