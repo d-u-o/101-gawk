@@ -9,7 +9,7 @@ prep() { gawk --source '
 }
 
 for i in *.awk; do
-  if [ $i -nt $Var/$i ]; then
+  if [ "$i" -nt "$Var/$i" ]; then
      cat $i | prep > $Var/$i
   fi
 done
