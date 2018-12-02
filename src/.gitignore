@@ -1,1 +1,11 @@
-/Users/timm/gits/d-u-o/101/src/var
+
+
+### Vim ###
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+awkprof.out
+awkvars.out
+.netrwhist
+*~

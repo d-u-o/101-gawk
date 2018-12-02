@@ -1,6 +1,7 @@
+
 # LICENSE
 
-DUA0, Copyright (c) 2018, Tim Menzies
+Duo101 Copyright (c) 2018, Tim Menzies
 All rights reserved, BSD 3-Clause License
 
 Redistribution and use in source and binary forms, with

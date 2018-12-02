@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ ! -f .bashrc ]; then
-  curl -o .bashrc http://www.centos.org
-end
+  curl -o .bashrc https://raw.githubusercontent.com/d-u-o/101/master/src/.bashrc
+fi
 
 bash --init-file .bashrc -i

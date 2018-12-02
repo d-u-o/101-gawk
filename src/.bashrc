@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
 
-Tag="Duo101"
+What="Duo101"
+Who="Tim Menzies"
+When=2018
+HERE=$PWD
+Var=$HERE/var
+Tmp=$HERE/tmp
+
 dirs() {
-	Var=$HERE/var
-	Tmp=$HERE/tmp
 	mkdir -p $Var $Tmp
 }
-runablec() {
+runable() {
 	chmod +x gold
-	HERE=$PWD
 	THERE=$(echo $PATH | gawk -F: '{print $1}')
 	sudo ln -sf $HERE/gold $THERE/gold
 }
@@ -32,7 +35,6 @@ vimrc() { cat <<-EOF
 	set mouse=a
 	set nocompatible
 	set nohlsearch
-	set number
 	set ruler
 	set scrolloff=3
 	set showmatch
@@ -42,13 +44,50 @@ vimrc() { cat <<-EOF
 	set title
 	set visualbell
 	syntax enable
-	set statusline=%f\
-	set statusline+=%2*\ %y\                   "FileType
-	set statusline+=%4*\%{&ff}\                 "FileFormat (dos/unix..)
-	set statusline+=%8*\ %=\ %l/%L\              "Rownumber/total (%)
-	set statusline+=%9*\ %03c\                   "Colnr
-	set statusline+=%0*\ \ %m%r%w\ %P\           "Modified? Readonly? Top/bot.
-EOF
+	set fillchars+=vert:\ 
+	colorscheme ron
+	hi VertSplit guifg=#202020 guibg=#202020 gui=NONE ctermfg=DarkGray ctermbg=DarkGray cterm=NONE
+	EOF
+}
+license() { cat<<-EOF
+	
+	# LICENSE
+	
+	$What Copyright (c) $When, $Who
+	All rights reserved, BSD 3-Clause License
+	
+	Redistribution and use in source and binary forms, with
+	or without modification, are permitted provided that
+	the following conditions are met:
+	
+	- Redistributions of source code must retain the above
+	  copyright notice, this list of conditions and the 
+	  following disclaimer.
+	- Redistributions in binary form must reproduce the
+	  above copyright notice, this list of conditions and the 
+	  following disclaimer in the documentation and/or other 
+	  materials provided with the distribution.
+	- Neither the name of the copyright holder nor the names 
+	  of its contributors may be used to endorse or promote 
+	  products derived from this software without specific 
+	  prior written permission.
+	
+	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+	CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+	WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+	WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+	PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+	THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY
+	DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+	CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+	PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
+	USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+	HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+	IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+	NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+	USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+	POSSIBILITY OF SUCH DAMAGE.
+	EOF
 }
 gitignore() { cat<<-EOF
 	$Tmp
@@ -64,6 +103,37 @@ gitignore() { cat<<-EOF
 	*~
 	EOF
 }
+requires() { cat<<-EOF
+	gawk>4.2
+	EOF
+}
+citation() { cat<<-EOF
+	# CITATION
+	
+	Please cite this as
+	
+	- T. Menzies, "DUO 101: An Introduction to Data Mining using/used-by Optimizers", 2018
+	
+	Bibtex:
+	
+	    @misc{menzies19,
+	      author="T.Menzies",
+	      year=2019,
+	      title="DUO 101: An Introduction to Data Mining using/used-by Optimizers"
+	      note="Download from http://github.com/d-u-o/101"
+	    }
+	
+	EOF
+}
+ensure() {
+  if [ ! -f "$1" ]; then $2 > $1; git add $1; fi
+}
+ensure .gitignore    gitignore
+ensure .vimrc        vimrc
+ensure ../LICENSE.md license
+ensure ../requirements.txt requires
+ensure ../CITATION.txt citation
+
 #--- tag line stuff
 _c1="\[\033[01;32m\]"
 _c2="\[\033[01;34m\]"
@@ -75,14 +145,11 @@ _c7="[\033]01;19\]"
 
 here() { cd $1; basename "$PWD"; }
 
-PROMPT_COMMAND='echo -ne "${_c6}${Tag}> \033]0;$(here ../..)/$(here ..)/$(here .)\007";PS1="${_c1} $(here ../..)/$_c2$(here ..)/$_c3$(here .) ${_c6}\!>${_c0}\e[m "'
+PROMPT_COMMAND='echo -ne "${_c6}${What}> \033]0;$(here ../..)/$(here ..)/$(here .)\007";PS1="${_c1} $(here ../..)/$_c2$(here ..)/$_c3$(here .) ${_c6}\!>${_c0}\e[m "'
 
 alias ll='ls -GF'
 alias vi="`which vim` -u .vimrc "
 
 dirs
-runnable
-if [ ! -f .gitignore ]; then gitignore > .gitignore; git add .gitignore; fi
-if [ ! -f .vimrc ];     then vimrc     > .vimrc;     git add .vimrc;     fi
-
+runable
 pathadd $PWD
