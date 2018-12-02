@@ -14,8 +14,9 @@ for i in *.awk; do
   fi
 done
 
+
 if [ -f "$1" ]; then
-  AWKPATH="$Var" gawk --source "`cat $1 | prep`"
+	AWKPATH="$Var" gawk -v Main="$(basename $1)" --source "`cat $1 | prep`"
 elif [ "$1" == "hi" ]; then
   git pull
 elif [ "$1" == "bye" ]; then
