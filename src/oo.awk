@@ -15,5 +15,17 @@ function haVE(i,x,f,a,b,c)     { has(i,x); @f(i[x],a,b,c) }
 function hAVE(i,x,f,a,b,c,d)   { has(i,x); @f(i[x],a,b,c,d) }
 function HAVE(i,x,f,a,b,c,d,e) { has(i,x); @f(i[x],a,b,c,d,e) }
 
-function _ready(i,j) { _Go = i._ako j }
-function isa(x) { return  1}
+function isa(i,class,parent,_) { 
+    i._isa=class; 
+    _ISA[class]=parent
+    return  i._id}
+
+function _method(i,f) {
+   isa = i._isa
+   while isa {
+     g = isa f
+     if (g in SYMTAB) return g
+     isa = _ISA[isa]
+   }
+   print "#E> " f " not found"; exit 1
+}

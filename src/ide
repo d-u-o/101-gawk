@@ -10,9 +10,6 @@ Tmp=$HERE/tmp
 dirs() {
 	mkdir -p $Var $Tmp
 }
-reload() {
-	.  .bashrc
-}
 runable() {
 	chmod +x gold
 	#THERE=$(echo $PATH | gawk -F: '{print $1}')
@@ -214,6 +211,13 @@ ok() { cat<<-'EOF'
 	EOF
 }
 bashrc() { cat<<-'EOF'
+	reload() {
+		. .bashrc
+	}
+	redo() {
+		rm var/*.awk
+		gold
+	}
 	#--- tag line stuff
 	_c1="\[\033[01;32m\]"
 	_c2="\[\033[01;34m\]"
