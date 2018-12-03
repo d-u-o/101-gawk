@@ -18,9 +18,9 @@ function HAVE(i,x,f,a,b,c,d,e) { has(i,x); @f(i[x],a,b,c,d,e) }
 function isa(i,class,parent,_) { 
     i._isa=class; 
     _ISA[class]=parent
-    return  i._id}
-
-function _method(i,f) {
+    return  i._id
+}
+function _method(i,f,    isa,g) {
    isa = i._isa
    while isa {
      g = isa f
