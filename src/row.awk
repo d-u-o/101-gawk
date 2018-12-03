@@ -11,9 +11,8 @@ function Row(i) {
   has(i,"sym") 
   i.class=""
 }
-function RowInc(i,x) {
-  return 1
-}
-function RowZz(i) {   
-  @Inc(i,22)                
+function RowAdd(i,csv,cells,   pos,xy) {
+  for(pos in csv.use)  {
+    xy = csv.xy[pos]
+    i.cells[pos] = add(csv[xy][pos], cells[pos]) }
 }

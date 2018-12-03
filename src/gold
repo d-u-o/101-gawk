@@ -2,25 +2,27 @@
 
 Var=$PWD/var
 
+# unsatisfying stuff for polymorphishm 
+#/@[A-Z][A-Za-z0-9_]+/ {
+#    $0 = gensub(/(.*)(@)([A-Z][A-Za-z0-9_]+)(.*)/,
+#                   "\\1_ready(i,\"\\3\")\\@_Go\\4","g",$0)
+#    }
 prep() { gawk --source '
-/@[A-Z][A-Za-z0-9_]+/ {
-    $0 = gensub(/(.*)(@)([A-Z][A-Za-z0-9_]+)(.*)/,
-                   "\\1_ready(i,\"\\3\")\\&_Go\\4","g",$0)
-    }
-/^function[ \t]+[A-Z]/ { 
-    txt = $0
-    sub(/\(.*/,"",txt)
-    sub(/^function[ \t]+/,"",txt);
+/^function[ \t]+/ { 
+    here = $0
+    sub(/\(.*/,"",here)
+    sub(/^function[ \t]+/,"",here);
     }
 /^[ \t]+isa/ { 
-     $0 = $0 "  i._ako=\"" txt "\"" }
+     $0 = $0 "  i.ako=\"" here "\"" 
+    }
     { $0 = gensub(/\.([^0-9])([a-zA-Z0-9_]*)/,
 	         "[\"\\1\\2\"]","g",$0) 
-      $0 = gensub(/__/,".","g",$0) }
-    { print } 
+      $0 = gensub(/__/,".","g",$0) 
+      print 
+    } 
 ' -
 }
-
 for i in *.awk; do
   	if [ "$i" -nt "$Var/$i" ]; then
      		cat $i | prep > $Var/$i
