@@ -3,26 +3,36 @@
 Var=$PWD/var
 
 prep() { gawk --source '
-{$0=gensub(/\.([^0-9])([a-zA-Z0-9_]*)/,"[\"\\1\\2\"]","g",$0)}
-{print gensub(/__/,".","g",$0)}
+/@[A-Z][A-Za-z0-9_]+/ {
+    $0 = gensub(/(.*)(@)([A-Z][A-Za-z0-9_]+)(.*)/,
+                   "\\1_ready(i,\"\\3\")\\&_Go\\4","g",$0)
+    }
+/^function[ \t]+[A-Z]/ { 
+    txt = $0
+    sub(/\(.*/,"",txt)
+    sub(/^function[ \t]+/,"",txt);
+    }
+/^[ \t]+isa/ { 
+     $0 = $0 "  i._ako=\"" txt "\"" }
+    { $0 = gensub(/\.([^0-9])([a-zA-Z0-9_]*)/,
+	         "[\"\\1\\2\"]","g",$0) 
+      $0 = gensub(/__/,".","g",$0) }
+    { print } 
 ' -
 }
 
 for i in *.awk; do
-  if [ "$i" -nt "$Var/$i" ]; then
-     cat $i | prep > $Var/$i
-  fi
+  	if [ "$i" -nt "$Var/$i" ]; then
+     		cat $i | prep > $Var/$i
+  	fi
 done
-
 
 if [ -f "$1" ]; then
 	AWKPATH="$Var" gawk -v Main="$(basename $1)" --source "`cat $1 | prep`"
 elif [ "$1" == "hi" ]; then
-  git pull
+  	git pull
 elif [ "$1" == "bye" ]; then
-  git commit -am "pushing"
-  git push
-  git status
-else
-  usage
+  	git commit -am "pushing"
+  	git push
+  	git status
 fi

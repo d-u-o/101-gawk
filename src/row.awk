@@ -4,11 +4,16 @@
 @include "lib"
 
 function Row(i) {
-  Object(i)
+  isa(Object(i))
   has(i,"less")
   has(i,"more")
   has(i,"num")
-  has(i,"sym")
-  i.class=""  
+  has(i,"sym") 
+  i.class=""
 }
-
+function RowInc(i,x) {
+  return 1
+}
+function RowZz(i) {   
+  @Inc(i,22)                
+}

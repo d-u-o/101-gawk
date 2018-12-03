@@ -1,7 +1,260 @@
 #!/usr/bin/env bash
 
-if [ ! -f .bashrc ]; then
-  curl -o .bashrc https://raw.githubusercontent.com/d-u-o/101/master/src/.bashrc
-fi
+What="Duo101"
+Who="Tim Menzies"
+When=2018
+HERE=$PWD
+Var=$HERE/var
+Tmp=$HERE/tmp
 
-bash --init-file .bashrc -i
+dirs() {
+	mkdir -p $Var $Tmp
+}
+reload() {
+	.  .bashrc
+}
+runable() {
+	chmod +x gold
+	#THERE=$(echo $PATH | gawk -F: '{print $1}')
+	#sudo ln -sf $HERE/gold $THERE/gold
+}
+golden() { cat <<-'EOF'
+	#!/usr/bin/env bash
+	
+	Var=$PWD/var
+	
+	prep() { gawk --source '
+	{$0=gensub(/\.([^0-9])([a-zA-Z0-9_]*)/,"[\"\\1\\2\"]","g",$0)}
+	{print gensub(/__/,".","g",$0)}
+	' -
+	}
+	
+	for i in *.awk; do
+	  	if [ "$i" -nt "$Var/$i" ]; then
+	     		cat $i | prep > $Var/$i
+	  	fi
+	done
+	
+	if [ -f "$1" ]; then
+		AWKPATH="$Var" gawk -v Main="$(basename $1)" --source "`cat $1 | prep`"
+	elif [ "$1" == "hi" ]; then
+	  	git pull
+	elif [ "$1" == "bye" ]; then
+	  	git commit -am "pushing"
+	  	git push
+	  	git status
+	else
+	  	usage
+	fi
+	EOF
+}
+vimrc() { cat <<-EOF
+	autocmd BufEnter * silent! lcd %:p:h
+	filetype plugin indent on
+	set autoindent
+	set background=light
+	set backspace=indent,eol,start
+	set backupdir^=$Tmp
+	set ignorecase
+	set incsearch
+	set laststatus=2
+	set matchtime=15
+	set modelines=3
+	set mouse=a
+	set nocompatible
+	set nohlsearch
+	set ruler
+	set scrolloff=3
+	set showmatch
+	set smartcase
+	set splitbelow
+	set syntax=on
+	set title
+	set visualbell
+	syntax enable
+	set fillchars+=vert:\ 
+	colorscheme torte
+	hi VertSplit guifg=#202020 guibg=#202020 gui=NONE ctermfg=DarkGray ctermbg=DarkGray cterm=NONE
+	EOF
+}
+license() { cat<<-EOF
+	
+	# LICENSE
+	
+	$What Copyright (c) $When, $Who
+	All rights reserved, BSD 3-Clause License
+	
+	Redistribution and use in source and binary forms, with
+	or without modification, are permitted provided that
+	the following conditions are met:
+	
+	- Redistributions of source code must retain the above
+	  copyright notice, this list of conditions and the 
+	  following disclaimer.
+	- Redistributions in binary form must reproduce the
+	  above copyright notice, this list of conditions and the 
+	  following disclaimer in the documentation and/or other 
+	  materials provided with the distribution.
+	- Neither the name of the copyright holder nor the names 
+	  of its contributors may be used to endorse or promote 
+	  products derived from this software without specific 
+	  prior written permission.
+	
+	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+	CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+	WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+	WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+	PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+	THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY
+	DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+	CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+	PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
+	USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+	HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+	IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+	NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+	USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+	POSSIBILITY OF SUCH DAMAGE.
+	EOF
+}
+gitignore() { cat<<-EOF
+	tmp/
+	var/
+	.bashrc
+	.vimrc
+	### Vim ###
+	[._]*.s[a-w][a-z]
+	[._]s[a-w][a-z]
+	*.un~
+	Session.vim
+	awkprof.out
+	awkvars.out
+	.netrwhist
+	*~
+	EOF
+}
+requires() { cat<<-EOF
+	gawk>4.2
+	EOF
+}
+citation() { cat<<-EOF
+	# CITATION
+	
+	Please cite this as
+	
+	- T. Menzies, "DUO 101: An Introduction to Data Mining using/used-by Optimizers", 2018
+	
+	Bibtex:
+	
+	    @misc{menzies19,
+	      author="T.Menzies",
+	      year=2019,
+	      title="DUO 101: An Introduction to Data Mining using/used-by Optimizers"
+	      note="Download from http://github.com/d-u-o/101"
+	    }
+	
+	EOF
+}
+blank() { cat<<-'EOF'
+	#!/usr/bin/env ./gold
+	# vim: filetype=awk: ts=2 sw=2 sts=2 expandtab:cindent:formatoptions+=cro 
+	
+	@include "lib"
+
+        BEGIN { if( Main=="XXX" ) 
+	          print 1
+	  }
+	EOF
+}
+oo() { cat<<-'EOF'
+	# vim: filetype=awk: ts=2 sw=2 sts=2 expandtab:cindent:formatoptions+=cro 
+	function new(i) { split("",i,"") } # empty array
+	
+	function Object(i)  { new(i); i._id = ++_ID } # empty array with unique id
+	
+	function has(i,x,f) {  # has-a creation with 0/1 arguments
+	  i[x][SUBSEP]         # create one-level deeper that what we want
+	  new(i[x])            # zap extra level, leaving an  empty array
+	  if (f) @f(i[x])      # maybe fill that empty array
+	}
+	# has-a creation with 1 to 5 arguments
+	function have(i,x,f,a)         { has(i,x); @f(i[x],a) }
+	function havE(i,x,f,a,b)       { has(i,x); @f(i[x],a,b) }
+	function haVE(i,x,f,a,b,c)     { has(i,x); @f(i[x],a,b,c) }
+	function hAVE(i,x,f,a,b,c,d)   { has(i,x); @f(i[x],a,b,c,d) }
+	function HAVE(i,x,f,a,b,c,d,e) { has(i,x); @f(i[x],a,b,c,d,e) }
+	EOF
+}
+ok() { cat<<-'EOF'
+	function tests(what, all,   one,a,i,n) {
+	  n = split(all,a,",")
+	  print("n " n)
+	  print " "
+	  print "#--- " what " -----------------------"
+	  for(i=1;i<=n;i++) {
+	    one = a[i]
+	    @one(one) }
+	}
+	
+	function is(f,got,want,    pre) {
+	  if (want == "") want=1
+	  if (want == got)
+	   pre="#TEST:\tPASSED"
+	  else
+	   pre="#TEST:\tFAILED"
+	  print( pre "\t" f "\t" want "\t" got )
+	}
+	
+	function rogues(    s) {
+	  for(s in SYMTAB)
+	   if (s ~ /^[A-Z][a-z]/) print "Global " s
+	  for(s in SYMTAB)
+	   if (s ~ /^[_a-z]/) print "Rogue: " s
+	}
+	EOF
+}
+bashrc() { cat<<-'EOF'
+	#--- tag line stuff
+	_c1="\[\033[01;32m\]"
+	_c2="\[\033[01;34m\]"
+	_c3="\[\033[31m\]"
+	_c6="\033[33m"
+	_c5="\[\033[35m\]$"
+	_c0="\[\033[00m\]"
+	_c7="[\033]01;19\]"
+	
+	here() { cd $1; basename "$PWD"; }
+	
+	PROMPT_COMMAND='echo -ne "${_c6}${What}> \033]0;$(here ../..)/$(here ..)/$(here .)\007";PS1="${_c1}$(here ../..)/$_c2$(here ..)/$_c3$(here .) ${_c6}\!>${_c0}\e[m "'
+	
+	alias ll='ls -GF'
+	alias vi="`which vim` -u .vimrc "
+	EOF
+}
+pathadd() {
+    	if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+        	PATH="${PATH:+"$PATH:"}$1"
+    	fi
+}
+exists0() {
+  	if [ ! -f "$1" ]; then $2 > $1; fi
+}
+exists() {
+	exists0 $1 $2
+	git add $1
+}
+dirs
+runable
+pathadd $PWD
+exists  ../.gitignore    	gitignore
+exists  ../requirements.txt 	requires
+exists  ../CITATION.md 		citation
+exists  ../LICENSE.md 		license
+exists  ../src/blank		blank; chmod +x blank
+exists  ../src/ok.awk		ok
+exists  ../src/oo.awk		oo
+exists  ../src/gold 		golden
+exists0 ../src/.vimrc        	vimrc
+exists0 ../src/.bashrc 		bashrc
+
+What="$What" bash --init-file .bashrc -i

@@ -1,5 +1,7 @@
 tmp/
 var/
+.bashrc
+.vimrc
 ### Vim ###
 [._]*.s[a-w][a-z]
 [._]s[a-w][a-z]

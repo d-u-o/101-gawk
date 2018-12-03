@@ -6,7 +6,6 @@ function tests(what, all,   one,a,i,n) {
   for(i=1;i<=n;i++) {
     one = a[i]
     @one(one) }
-  rogues()
 }
 
 function is(f,got,want,    pre) {

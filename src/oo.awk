@@ -14,3 +14,6 @@ function havE(i,x,f,a,b)       { has(i,x); @f(i[x],a,b) }
 function haVE(i,x,f,a,b,c)     { has(i,x); @f(i[x],a,b,c) }
 function hAVE(i,x,f,a,b,c,d)   { has(i,x); @f(i[x],a,b,c,d) }
 function HAVE(i,x,f,a,b,c,d,e) { has(i,x); @f(i[x],a,b,c,d,e) }
+
+function _ready(i,j) { _Go = i._ako j }
+function isa(x) { return  1}
