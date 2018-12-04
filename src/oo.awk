@@ -20,9 +20,8 @@ function isa(i,class,parent,_) {
     _ISA[class]=parent
     return  i._id
 }
-function _method(i,f,    isa,g) {
-   isa = i._isa
-   while isa {
+function which(isa,f,    g) {
+   while (isa) {
      g = isa f
      if (g in SYMTAB) return g
      isa = _ISA[isa]

@@ -2,13 +2,6 @@
 # vim: filetype=awk: ts=2 sw=2 sts=2 expandtab:cindent:formatoptions+=cro 
 
 @include "lib"
+BEGIN{for(i=1;i<ARGC; i++) print ARGV[i] }
 
-function Row(i) {
-  Object(i)
-  has(i,"less")
-  has(i,"more")
-  has(i,"num")
-  has(i,"sym")
-  i.class=""  
-}
-
+{print 22 $0}

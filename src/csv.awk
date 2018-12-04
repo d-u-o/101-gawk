@@ -28,7 +28,7 @@ function CsvRead(i,file,        txts,txt,cells, row) {
          txts = ""
          if (row) {
            has(i.rows, row, "Row")
-           add(i.rows[row], i, cells)
+           Add(i.rows[row], i, cells)
          }
          else
            CsvHeader(i,cells)
