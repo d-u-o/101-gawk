@@ -1,4 +1,4 @@
-#!/usr/bin/env ./gold
+#!./gold
 # vim: filetype=awk: ts=2 sw=2 sts=2 expandtab:cindent:formatoptions+=cro 
 
 function settings(i) { # stuff that is fixed, or which accumulates

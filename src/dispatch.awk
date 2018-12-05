@@ -1,4 +1,4 @@
-#!/usr/bin/env ./gold
+#!./gold
 # vim: filetype=awk: ts=2 sw=2 sts=2 expandtab:cindent:formatoptions+=cro 
 
 function Add(x,a,   f) { f=which(x._isa,"Add");  return @f(x,a) }
