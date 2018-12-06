@@ -4,27 +4,26 @@
 @include "config"
 
 BEGIN { FS = ","
-        split( AU.ch.less AU.ch.more AU.ch.klass \
-               AU.ch.num AU.ch.sym,  All, "") 
+        All[AU.ch.less]
+        All[AU.ch.more]
+        All[AU.ch.klass]
+        All[AU.ch.num]
+        All[AU.ch.sym]
       }
       {  gsub(/[ \t\r\'\"]*/, "") 
-         gsub(/#["*"]$/,  "") 
+         gsub(/#__*$/,  "") 
       }
 NR==1 { for(i=1;i<=NF;i++)  {
-          word= $i
-          char= substr(word,1,1)
+          char= substr($i,1,1)
           if (char != AU.ch.skip) 
-            for(j in All) {
-              k = All[j]
-              if (k == char) 
-                Header[ k ][i] }}
+            for(c in All) {
+              if (c == char) 
+                Header[c][i] }}
       }
       {  print ""
-         for(j in All) {
-           k = All[j]
-           printf k
-           if (k in Header)
-             for(i in Header[k]) 
-               printf FS $i 
-           print "" }
+         for(c in Header) {
+           s = c
+           for(i in Header[c]) 
+              s= s  FS $i 
+           print s }
       }

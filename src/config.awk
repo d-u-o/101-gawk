@@ -10,7 +10,7 @@ function settings(i) { # stuff that is fixed, or which accumulates
 	i.ch.more=">"
 	i.ch.klass="!"
 	i.ch.num="$"
-	i.ch.sym="#"
+	i.ch.sym="%"
   i.ok.pass=0
   i.ok.fail=0
 }

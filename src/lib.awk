@@ -1,10 +1,8 @@
-function cc(a,b) { return a+b.c }
+# vim: ft=awk:ts=2 sw=2 sts=2 expandtab:cindent:formatoptions+=cro
 
 @include "oo"
 @include "ok"
 @include "dispatch"
-
-# vim: ft=awk:ts=2 sw=2 sts=2 expandtab:cindent:formatoptions+=cro
 
 function nump(x) {
   return x=="" ? 0 : x == (0+strtonum(x))
