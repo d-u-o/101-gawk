@@ -3,28 +3,28 @@
 
 @include "config"
 
-BEGIN { FS = OFS = ","
+BEGIN { FS = ","
         split( AU.ch.less AU.ch.more AU.ch.klass \
-               AU.ch.num AU.ch.sym,  All, "") }
-
-function Slots(i,   j) {
-  new(i)
-  for(j in All) has(i, All[j]) }
-
-{  gsub(/[ \t\r]*/, "", txt)    # no whitespce:
-   gsub(/#["*"]$/,  "", txt)  } # no comments
-NR==1 { Slots(Header)
-        for(i=1;i<=NF;i++)  {
-          if ($i !~ AU.ch.skip) {
-            for(j in All) {
-              if ($i ~ All[j]) {
-                print "ij ",j, $i, All[j]
-                Header[ All[j] ][i] 
-              }}}}
-        o(Header,22)
+               AU.ch.num AU.ch.sym,  All, "") 
       }
-0      { print ""
-        for(j in All) {
-          printf j 
-          for(i in Header[j]) printf OFS i 
-          print "" }}
+      {  gsub(/[ \t\r\'\"]*/, "") 
+         gsub(/#["*"]$/,  "") 
+      }
+NR==1 { for(i=1;i<=NF;i++)  {
+          word= $i
+          char= substr(word,1,1)
+          if (char != AU.ch.skip) 
+            for(j in All) {
+              k = All[j]
+              if (k == char) 
+                Header[ k ][i] }}
+      }
+      {  print ""
+         for(j in All) {
+           k = All[j]
+           printf k
+           if (k in Header)
+             for(i in Header[k]) 
+               printf FS $i 
+           print "" }
+      }
