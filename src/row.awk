@@ -3,6 +3,10 @@
 
 @include "lib"
 
+function Table(i) {
+  has(i,"header","Row")
+  has(i,"rows")
+}
 function Row(i) {
   isa(Object(i))
   has(i,"less")

@@ -6,17 +6,6 @@
 @include "num"
 @include "sym"
 
-function Csv(i) {
-  Object(i); i._ako="Csv"
-  has(i,"x")
-  has(i,"y")
-  has(i,"xy")
-  has(i,"rows")
-  has(i,"use")
-  i.klassp = "[><!]"
-  i.nump   = "[$<>]"
-  i.skip   = "?"
-}
 function CsvRead(i,file,        txts,txt,cells, row) {
   while((getline txt < file) > 0)  {
      gsub(/[ \t\r]*/, "", txt) # no whitespce:

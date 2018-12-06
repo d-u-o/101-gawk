@@ -1,6 +1,8 @@
 #!./gold
 # vim: filetype=awk: ts=2 sw=2 sts=2 expandtab:cindent:formatoptions+=cro 
 
+@include "lib"
+
 function settings(i) { # stuff that is fixed, or which accumulates
   new(i)
 	i.ch.skip="?"
@@ -8,6 +10,7 @@ function settings(i) { # stuff that is fixed, or which accumulates
 	i.ch.more=">"
 	i.ch.klass="!"
 	i.ch.num="$"
+	i.ch.sym="#"
   i.ok.pass=0
   i.ok.fail=0
 }

@@ -3,9 +3,9 @@
 What="Duo101"
 Who="Tim Menzies"
 When=2018
-HERE=$PWD
-Var=$HERE/var
-Tmp=$HERE/tmp
+Here=$PWD
+Var=$Here/var
+Tmp=$Here/tmp
 
 dirs() {
 	mkdir -p $Var $Tmp
@@ -261,4 +261,4 @@ exists  ../src/gold 		golden
 exists0 ../src/.vimrc        	vimrc
 exists0 ../src/.bashrc 		bashrc
 
-What="$What" bash --init-file .bashrc -i
+Here="$Here" What="$What" bash --init-file .bashrc -i
