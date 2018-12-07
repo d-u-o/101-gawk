@@ -24,7 +24,8 @@ function which(isa,f,up,    g) {
    isa = up ? _ISA[isa] : isa
    while (isa) {
      g = isa f
-     if (g in SYMTAB) return g
+  print(g)
+     if (g in FUNCTAB) return g
      isa = _ISA[isa]
    }
    print "#E> " f " not found"; exit 1

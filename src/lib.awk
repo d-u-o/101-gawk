@@ -4,6 +4,8 @@
 @include "ok"
 @include "dispatch"
 @include "file"
+BEGIN { DOT="__"
+        DOT2 = DOT DOT}
 
 function nump(x) {
   return x=="" ? 0 : x == (0+strtonum(x))

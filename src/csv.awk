@@ -35,5 +35,4 @@ function CsvHeader(i,cells,       j,txt,pos,xy,what) {
       haVE(i[xy],pos,what,pos,txt)
       if (txt ~ i.lessp)  i[xy][pos].w= -1
       if (txt ~ i.klassp) i.klass=pos
-  }}
-}
+}}}

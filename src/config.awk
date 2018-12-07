@@ -8,7 +8,7 @@ function settings(i) { # stuff that is fixed, or which accumulates
 	i.ch.skip="?"
 	i.ch.less="<"
 	i.ch.more=">"
-	i.ch.klass="!"
+	i.ch.class="!"
 	i.ch.num="$"
 	i.ch.sym="%"
   i.ok.pass=0

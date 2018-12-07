@@ -1,0 +1,7 @@
+
+
+# run this script in ../src
+
+rows ../test/data/weather.csv |
+head -10 |
+gold table.awk

@@ -6,7 +6,7 @@
 BEGIN { FS = ","
         All[AU.ch.less]
         All[AU.ch.more]
-        All[AU.ch.klass]
+        All[AU.ch.class]
         All[AU.ch.num]
         All[AU.ch.sym]
       }

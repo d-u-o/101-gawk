@@ -30,11 +30,15 @@ done
 f=$1
 shift
 if [ -f "$f" ]; then
-	AWKPATH="$Var" gawk -v Main="$(basename $f)" --source "`cat $f | prep`"   "$@"
+    b=$(basename $f)
+    g=$Var/$b
+    cat $f | prep > $g
+    AWKPATH="$Var" gawk -v _MAIN="$(basename $f)" -f $g  "$@"
 elif [ "$f" == "hi" ]; then
   	git pull
 elif [ "$f" == "bye" ]; then
   	git commit -am "pushing"
   	git push
   	git status
+else echo "??"
 fi
