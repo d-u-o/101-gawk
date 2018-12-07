@@ -3,6 +3,7 @@
 @include "oo"
 @include "ok"
 @include "dispatch"
+@include "file"
 
 function nump(x) {
   return x=="" ? 0 : x == (0+strtonum(x))
