@@ -1,0 +1,4 @@
+
+# run this script in ../src
+
+rows ../test/data/weather.csv
