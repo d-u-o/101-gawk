@@ -77,4 +77,4 @@ function _table(i,f)  {
   Print(i);
   rogues()
 }
-BEGIN { _table() }
+#BEGIN { _table() }
