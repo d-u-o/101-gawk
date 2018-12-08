@@ -12,15 +12,15 @@ dirs() {
 }
 runable() {
 	chmod +x gold
-	#THERE=$(echo $PATH | $Gawk -F: '{print $1}')
+	#THERE=$(echo $PATH | gawk -F: '{print $1}')
 	#sudo ln -sf $HERE/gold $THERE/gold
 }
 golden() { cat <<-'EOF'
 	#!/usr/bin/env bash
-
-    . .iderc	
 	
-	prep() { $Gawk  --source '
+	Var=$PWD/var
+	
+	prep() { gawk --source '
 	{$0=gensub(/\.([^0-9])([a-zA-Z0-9_]*)/,"[\"\\1\\2\"]","g",$0)}
 	{print gensub(/__/,".","g",$0)}
 	' -
@@ -33,7 +33,7 @@ golden() { cat <<-'EOF'
 	done
 	
 	if [ -f "$1" ]; then
-		AWKPATH="$Var" $Gawk -v Main="$(basename $1)" --source "`cat $1 | prep`"
+		AWKPATH="$Var" gawk -v Main="$(basename $1)" --source "`cat $1 | prep`"
 	elif [ "$1" == "hi" ]; then
 	  	git pull
 	elif [ "$1" == "bye" ]; then
@@ -117,7 +117,6 @@ license() { cat<<-EOF
 gitignore() { cat<<-EOF
 	tmp/
 	var/
-	.iderc
 	.bashrc
 	.vimrc
 	### Vim ###
@@ -129,11 +128,6 @@ gitignore() { cat<<-EOF
 	awkvars.out
 	.netrwhist
 	*~
-	EOF
-}
-iderc() { cat<<-EOF
-	Gawk=$HOME/opt/gawk/bin/gawk
-	Var=$PWD/var
 	EOF
 }
 requires() { cat<<-EOF
@@ -266,6 +260,5 @@ exists  ../src/oo.awk		oo
 exists  ../src/gold 		golden
 exists0 ../src/.vimrc        	vimrc
 exists0 ../src/.bashrc 		bashrc
-exists0 ../src/.iderc 		iderc
 
 Here="$Here" What="$What" bash --init-file .bashrc -i
