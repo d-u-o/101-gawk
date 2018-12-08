@@ -19,7 +19,10 @@ function is(f,got,want,    pre) {
 
 function rogues(    s) {
   for(s in SYMTAB)
-   if (s ~ /^[A-Z][a-z]/) print "Global " s
+   if (s ~ /^[A-Z][a-z]/) 
+       print "Global " s
   for(s in SYMTAB)
-   if (s ~ /^[_a-z]/) print "Rogue: " s
+   if (s ~ /^[_a-z]/) 
+     if (s !~ /^_/)
+       print "Rogue: " s
 }

@@ -15,16 +15,17 @@ function Row(i) {
   has(i,AU.ch.class)
   has(i,AU.ch.sym)
 }
-function RowPrint(i,      s,sep,x,y) {
-  s="\n"
-  for(x in i) {
-    sep=""
-    for(y in i[x]) {
-      s = s sep i[x][y]
-      sep=","}
-    s = s "\n"}
-  print s
-}
+function RowPrint(i,      s,t,x,y) {
+  print("")
+  for(x in i) 
+    if (x !~ /_/) {
+      s=x
+      t=""
+      if (isarray(i[x])) 
+        for(y in i[x])  t = t "," i[x][y]
+      else t = "," i[x]   
+    if (t) print(s t) }}
+
 
 # ------------------------
 function Table(i,name) {
@@ -40,17 +41,12 @@ function TableRead(i,f) {
 # When we add a `header` to a `table`, also add objects
 # to collet statistics for the `num`s and `sym`s.
 function Table0(i, row, strs,   j,n,a,x,y) {
-  print("t0",length(strs))
    for(j in strs) {
-     print("str> ", strs[j])
      n= split(strs[j],a,",")
      x=a[1]
-     print">",n,x,j
      for(y=2;y<=n;y++) {
-       print("--->", x,a[y])
-       i.header[x][y] =   a[y]; print 22
-       i.stats[x][y] =  numcell(x) ? "Num" : "Sym"; print 33}}
-  o(i); exit
+       i.header[x][y] =   a[y]; 
+       has(i.stats[x],y,   numcell(x) ? "Num" : "Sym")}}
 }
 
 # `numcell` is true for `num`, `less`, `more` symbols.
@@ -58,15 +54,13 @@ function numcell(x) { return x==AU.ch.num || x==AU.ch.less || x==AU.ch.more }
 
 # When we add a `row` to a `table`, we also update the `stats`.
 function TableAdd(i, row,strs,    j,n,a,x,y,cell) {
-  print ""
+  has(i.rows, row, "Row")
   for(j in strs) {
     n = split(strs[j],a,",")
-    x = a[1]; print("))","["strs[j]"]" ,x,n)
+    x = a[1]; 
     for(y=2;y<=n;y++) {
       cell = numcell(x)  ? 0 + a[y] : a[y]
-      print "cell " cell
-      has(i.rows[row][x],y, cell)
-      print 22
+      i.rows[row][x][y] =  cell 
       Add(i.stats[x][y], cell)
 }}}
 
@@ -74,14 +68,13 @@ function TableAdd(i, row,strs,    j,n,a,x,y,cell) {
 # Does not show `stats`.
 function TablePrint(i,   rows,r) {
   Print(i.header)
-  for(r in i.rows)
-    Print(i.rows[r])
+  for(r in i.rows) Print(i.rows[r])
 }
 function _table(i,f)  {
   f="-"
   Table(i,f)
   Read(i,f)
-  o(i,"t")
+  Print(i);
   rogues()
 }
 BEGIN { _table() }

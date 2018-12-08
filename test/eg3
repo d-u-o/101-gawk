@@ -2,5 +2,5 @@
 
 # run this script in ../src
 
-rows ../test/data/weather.csv |
+rows ../test/data/auto.csv |
 gold table.awk

@@ -24,7 +24,6 @@ function which(isa,f,up,    g) {
    isa = up ? _ISA[isa] : isa
    while (isa) {
      g = isa f
-  print(g)
      if (g in FUNCTAB) return g
      isa = _ISA[isa]
    }

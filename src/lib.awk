@@ -2,6 +2,7 @@
 
 @include "oo"
 @include "ok"
+@include "config"
 @include "dispatch"
 @include "file"
 BEGIN { DOT="__"
