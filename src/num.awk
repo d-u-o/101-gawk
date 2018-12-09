@@ -26,3 +26,6 @@ function NumAdd(i,x,          delta) {
     i.sd = (i.m2/(i.n-1))^0.5
   return x
 }
+function NumNorm(i,x) {
+  return (x- i.lo)/ (i.hi - i.lo +10^-32)
+}

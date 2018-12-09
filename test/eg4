@@ -1,0 +1,5 @@
+
+# run this script in ../src
+
+rows ../test/data/auto10.csv |
+gold label

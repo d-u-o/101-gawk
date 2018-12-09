@@ -1,3 +1,4 @@
+#!/usr/bin/env ./gold
 # vim: filetype=awk: ts=2 sw=2 sts=2 expandtab:cindent:formatoptions+=cro 
 
 @include "lib"
@@ -50,7 +51,9 @@ function Table0(i, row, strs,   j,n,a,x,y) {
 }
 
 # `numcell` is true for `num`, `less`, `more` symbols.
-function numcell(x) { return x==AU.ch.num || x==AU.ch.less || x==AU.ch.more }
+function numcell(x) { 
+  return x==AU.ch.num || x==AU.ch.less || x==AU.ch.more 
+}
 
 # When we add a `row` to a `table`, we also update the `stats`.
 function TableAdd(i, row,strs,    j,n,a,x,y,cell) {

@@ -11,6 +11,7 @@ function settings(i) { # stuff that is fixed, or which accumulates
 	i.ch.class="!"
 	i.ch.num="$"
 	i.ch.sym="%"
+	i.ch.dom="*"
   i.ok.pass=0
   i.ok.fail=0
 }

@@ -9,7 +9,7 @@ function Sym(i,pos,txt) {
   i.txt = txt
   i.mode = ""
   i.most = 0
-  i.ent =""
+  i._ent =""
   i.n = 0
   i.ignore="?"
   i.w=1
@@ -18,6 +18,7 @@ function Sym(i,pos,txt) {
 function SymAdd(i,x,   tmp) {
   if( x == i.ignore ) return x
   i.n++
+  i._ent=""
   tmp = i.counts[x] = i.counts[x] + 1
   if(tmp > i.mode) {
     i.most = tmp
@@ -25,11 +26,16 @@ function SymAdd(i,x,   tmp) {
   }
   return x
 }
+function SymNorm(i,x) { 
+  return x 
+}
 function SymEnt(i,   x,p) {
-  i.ent=0
+  if (i._ent)
+    return i._ent
+  i._ent=0
   for(x in i.counts) {
-    p = i.counts[x]/i.n
-    i.ent -= p * log(p) / log(2)
+    p       = i.counts[x]/i.n
+    i._ent -= p * log(p) / log(2)
   }
-  return i.ent
+  return i._ent
 }

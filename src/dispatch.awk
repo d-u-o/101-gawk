@@ -8,4 +8,5 @@ function dispatch(f,i,a,up) {
 function Add(i,a,up)    { return dispatch("Add"  ,i,a,up) }
 function Print(i,a,up)  { return dispatch("Print",i,a,up) }
 function Read(i,a,up)   { return dispatch("Read" ,i,a,up) }
+function Norm(i,a,up)   { return dispatch("Norm" ,i,a,up) }
 

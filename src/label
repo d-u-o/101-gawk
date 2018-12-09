@@ -1,48 +1,18 @@
 #!/usr/bin/env ./gold
 # vim: filetype=awk: ts=2 sw=2 sts=2 expandtab:cindent:formatoptions+=cro 
 
-@include "config"
+@include "lib"
+@include "table"
 
-BEGIN { n=0; FS=","
-        less=AU.ch.less
-        more=AU.ch.more
-        num = less "|" more
+BEGIN { Table(i)
+        #Read(i)
+        #doms(i)
+        #i.header[AU.ch.dom]
+        o(i)
 }
-function loHi0(    col) {
-  for(col=2;col<=NF;col++) {
-    lo[col] =  10^32; 
-    hi[col] = -10^32} 
-}}
-function loHi1(   col) {
-  for(col=2;col<=NF;col++) {
-     if ($col < lo[col]) lo[col] = $col 
-     if ($col > hi[col]) hi[col] = $col
-}}
-function any(l) {
-  return l[int(rand()*length(l)) + 1]
-}
-function anybut(l,but1,but2,          lives, x) {
-  x = any(rec)
-  if (x==but1 || x==but2)
-    return lives > 9 ? x : anybut(l,but1,but2,lives+1)
-  else
-    return x
-}
-
-
-#--------------------------------
-           { what=$1
-             for(col=2;col<=NF;col++) rec[row][what][col] = $col }
-$1~num     { NR==1 ?  lohi0() : lohi1() }
-/^[ \t]*$/ { row++ }
-END        { for(r in rec)
-               if (r)
-                 rec[r][class] = dom(r,AU.label.m)
-           }
-
 
 function dom(r,m,         i,n) {
-  while(m-- > 0)
+  while((m--) > 0)
     n += dom1(r, anyBut(r,Data))
   return n
 }
@@ -60,4 +30,4 @@ function dom1(r1,r2,   w,n,c,a,b,s1,s2) {
       s1 -= 10^(w * (a - b) / n)
       s2 -= 10^(w * (b - a) / n)  }
   return s1 / n < s2 / n
-
+}
